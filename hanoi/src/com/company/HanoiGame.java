@@ -73,8 +73,10 @@ public class HanoiGame {
 //                else
 //                    str += "  ";
 //            }
-            System.out.println(str);
+            if (str.trim().length() > 0)
+                System.out.println(str);
         }
+        System.out.println();
     }
 
     private void moveDisc(int sourceTowerIndex, int destTowerIndex) {
