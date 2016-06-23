@@ -46,6 +46,10 @@ public class HanoiGame {
     private void doTurn(int diskCount) {
         printState(diskCount);
 
+        moveDisc(0, 2);
+
+        printState(diskCount);
+
         isCompleted = true;
     }
 
@@ -71,6 +75,10 @@ public class HanoiGame {
 //            }
             System.out.println(str);
         }
+    }
+
+    private void moveDisc(int sourceTowerIndex, int destTowerIndex) {
+        towers.get(destTowerIndex).push(towers.get(sourceTowerIndex).pop());
     }
 
     private void initializeTowers(int diskCount) {
