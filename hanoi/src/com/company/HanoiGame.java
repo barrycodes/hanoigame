@@ -92,6 +92,16 @@ public class HanoiGame {
         towers.get(destTowerIndex).push(discToMove);
     }
 
+    private boolean isMoveLegal(int sourceTowerIndex, int destTowerIndex) {
+        return true;
+    }
+
+    private boolean isWinner() {
+        return
+            (towers.get(0).size() == 0
+                && towers.get(1).size() == 0);
+    }
+
     private void initializeTowers(int diskCount) {
         for (int i = 1; i <= diskCount; ++i)
             towers.get(0).push(i);
