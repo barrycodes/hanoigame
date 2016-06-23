@@ -54,7 +54,6 @@ public class HanoiGame {
     }
 
     private void printState(int diskCount) {
-        System.out.println("A  B  C");
 
         for (int i = diskCount; i >= 1; --i) {
             String str = "";
@@ -76,11 +75,18 @@ public class HanoiGame {
             if (str.trim().length() > 0)
                 System.out.println(str);
         }
+        System.out.println("--------");
+        System.out.println("A  B  C");
+        System.out.println();
         System.out.println();
     }
 
     private void moveDisc(int sourceTowerIndex, int destTowerIndex) {
-        towers.get(destTowerIndex).push(towers.get(sourceTowerIndex).pop());
+        int discToMove = towers.get(sourceTowerIndex).pop();
+
+        moves.add(discToMove);
+
+        towers.get(destTowerIndex).push(discToMove);
     }
 
     private void initializeTowers(int diskCount) {
