@@ -16,6 +16,8 @@ public class HanoiGame {
 
     private List<Integer> moves;
 
+    private int discCount;
+
     public HanoiGame() {
         setUp();
     }
@@ -24,36 +26,36 @@ public class HanoiGame {
 
         System.out.println("HANOI GAME");
         System.out.println("ENTER INTEGAR NUMBER OF DISKS!!!!!!!!!!!!!!");
-        int diskCount = new Scanner(System.in).nextInt();
+        this.discCount = new Scanner(System.in).nextInt();
         System.out.println("STARTING...");
         System.out.println();
 
-        initializeTowers(diskCount);
-        doGame(diskCount);
+        initializeTowers();
+        doGame();
 
         System.out.println("WIN!");
     }
 
-    private void doGame(int diskCount) {
+    private void doGame() {
         while (!isCompleted) {
-            doTurn(diskCount);
+            doTurn();
         }
     }
 
-    private void doTurn(int diskCount) {
+    private void doTurn() {
 
-        printState(diskCount);
+        printState();
         moveDisc(0, 2);
-        printState(diskCount);
+        printState();
 
         isCompleted = true;
     }
 
-    private void printState(int diskCount) {
+    private void printState() {
 
         System.out.println("| MOVE # " + moves.size());
 
-        for (int i = diskCount; i >= 1; --i) {
+        for (int i = discCount; i >= 1; --i) {
             String str = "";
             for (Stack<Integer> tower : towers) {
                 if (tower.size() >= i) {
@@ -92,8 +94,8 @@ public class HanoiGame {
                 && towers.get(1).size() == 0);
     }
 
-    private void initializeTowers(int diskCount) {
-        for (int i = 1; i <= diskCount; ++i)
+    private void initializeTowers() {
+        for (int i = 1; i <= discCount; ++i)
             towers.get(0).push(i);
     }
 
@@ -103,6 +105,42 @@ public class HanoiGame {
         if (tower.size() > 0)
             result = tower.get(tower.size() - 1);
         return result;
+    }
+
+    private int findTowerToMove() {
+        int result = -1;
+        if (moves.size() == 0)
+            result = 0;
+        else {
+            int lastDisc = moves.get(moves.size() - 1);
+            boolean lastIsOdd = (lastDisc % 2 == 1);
+
+        }
+        return result;
+    }
+
+    private boolean isTowerOdd(int tower) {
+        return getTopDisc(tower) % 2 == 1;
+    }
+
+    private int getMove(int currentTower) {
+        if (isTowerOdd(currentTower))
+            --currentTower;
+        else
+            ++currentTower;
+        if (currentTower < 0) currentTower = 2;
+        if (currentTower > 2) currentTower = 0;
+        return currentTower;
+    }
+
+    private List<Integer> getCandidateMoves() {
+        List<Integer> results = new ArrayList<Integer>();
+        for (int i = 0; i < 3; ++i) {
+            int destTower = getMove(i);
+            if (isMoveLegal(i, destTower))
+                results.add(i);
+        }
+        return results;
     }
 
     private void setUp() {
