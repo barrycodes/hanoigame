@@ -85,6 +85,9 @@ public class HanoiGame {
     }
 
     private void moveDisc(int sourceTowerIndex, int destTowerIndex) {
+
+        isMoveLegal(sourceTowerIndex, destTowerIndex);
+
         int discToMove = towers.get(sourceTowerIndex).pop();
 
         moves.add(discToMove);
@@ -93,7 +96,19 @@ public class HanoiGame {
     }
 
     private boolean isMoveLegal(int sourceTowerIndex, int destTowerIndex) {
-        return true;
+
+        int sourceTopDisc = 0;
+        int destTopDisc = 0;
+
+        Stack<Integer> sourceTower = towers.get(sourceTowerIndex);
+        Stack<Integer> destTower = towers.get(destTowerIndex);
+
+        if (sourceTower.size() > 0)
+            sourceTopDisc = sourceTower.get(sourceTower.size() - 1);
+        if (destTower.size() > 0)
+            destTopDisc = destTower.get(destTower.size() - 1);
+
+        return sourceTopDisc > destTopDisc;
     }
 
     private boolean isWinner() {
