@@ -30,6 +30,7 @@ public class HanoiGame {
         System.out.println("ENTER INTEGAR NUMBER OF DISKS!!!!!!!!!!!!!!");
         int diskCount = new Scanner(System.in).nextInt();
         System.out.println("STARTING...");
+        System.out.println();
 
         initializeTowers(diskCount);
         doGame(diskCount);
@@ -55,6 +56,8 @@ public class HanoiGame {
 
     private void printState(int diskCount) {
 
+        System.out.println("| MOVE # " + moves.size());
+
         for (int i = diskCount; i >= 1; --i) {
             String str = "";
             for (Stack<Integer> tower : towers) {
@@ -73,10 +76,10 @@ public class HanoiGame {
 //                    str += "  ";
 //            }
             if (str.trim().length() > 0)
-                System.out.println(str);
+                System.out.println("| " + str);
         }
-        System.out.println("--------");
-        System.out.println("A  B  C");
+        System.out.println("| --------");
+        System.out.println("| A  B  C");
         System.out.println();
         System.out.println();
     }
