@@ -45,10 +45,13 @@ public class HanoiGame {
     private void doTurn() {
 
         printState();
-        moveDisc(0, 2);
-        printState();
 
-        isCompleted = true;
+        if (isWinner())
+            isCompleted = true;
+        else {
+            int towerToMove = findTowerToMove();
+            moveDisc(towerToMove, getMove(towerToMove));
+        }
     }
 
     private void printState() {
@@ -114,9 +117,37 @@ public class HanoiGame {
         else {
             int lastDisc = moves.get(moves.size() - 1);
             boolean lastIsOdd = (lastDisc % 2 == 1);
-
+            List<Integer> candidateMoves = getCandidateMoves();
+            List<Integer> goodMoves = getOddMoves(candidateMoves, !lastIsOdd);
+            List<Integer> badMoves = getOddMoves(candidateMoves, lastIsOdd);
+            if (goodMoves.size() == 1)
+                result = goodMoves.get(0);
+            else if (goodMoves.size() == 2)
+                result = getLeastRecentTower(goodMoves.get(0), goodMoves.get(1));
+            else if (badMoves.size() == 1)
+                result = badMoves.get(0);
+            else if (badMoves.size() == 2)
+                result  = getLeastRecentTower(badMoves.get(0), badMoves.get(1));
         }
         return result;
+    }
+
+    private List<Integer> getOddMoves(List<Integer> candidates, boolean odd) {
+        List<Integer> results = new ArrayList<Integer>();
+        for (int n : candidates)
+            if (odd && isTowerOdd(n)) results.add(n);
+            else if (!odd && !isTowerOdd(n)) results.add(n);
+        return results;
+    }
+
+    private int getLeastRecentTower(int tower1, int tower2) {
+        int result = -1;
+        for (int i = moves.size() - 1; i >= 0 && result == -1; --i) {
+            int move = moves.get(i);
+            if (move == tower1) result = tower2;
+            else if (move == tower2) result = tower1;
+        }
+        return  result;
     }
 
     private boolean isTowerOdd(int tower) {
