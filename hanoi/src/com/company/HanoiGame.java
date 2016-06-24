@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 /**
- * Created by barrsmit1 on 6/23/2016.
+ * Created by Barry Smith on 6/23/2016.
  */
 public class HanoiGame {
 
@@ -18,26 +18,33 @@ public class HanoiGame {
 
     private int discCount;
 
-    public HanoiGame() {
-        setUp();
-    }
+    public HanoiGame() { }
 
     public void run() {
-
-        System.out.println("HANOI GAME");
-        System.out.println("ENTER INTEGAR NUMBER OF DISKS!!!!!!!!!!!!!!");
-        this.discCount = new Scanner(System.in).nextInt();
-        System.out.println("STARTING...");
-        System.out.println();
-
-        initializeTowers();
-        doGame();
-
-        System.out.println("WIN!");
+        doPromptLoop();
     }
 
     private void doPromptLoop() {
 
+        while (discCount >= 0) {
+
+            System.out.println("HANOI GAME");
+            System.out.println("ENTER INTEGAR NUMBER OF DISKS!!!!!!!!!!!!!! ( enter -1 to quit )");
+
+            discCount = new Scanner(System.in).nextInt();
+
+            if (discCount > 0) {
+
+                System.out.println("STARTING...");
+                System.out.println();
+
+                setUp();
+
+                doGame();
+
+                System.out.println("WIN!");
+            }
+        }
     }
 
     private void doGame() {
@@ -187,5 +194,9 @@ public class HanoiGame {
         towers.add(new Stack<Integer>());
 
         moves = new ArrayList<Integer>();
+
+        isCompleted = false;
+
+        initializeTowers();
     }
 }
