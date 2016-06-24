@@ -36,6 +36,10 @@ public class HanoiGame {
         System.out.println("WIN!");
     }
 
+    private void doPromptLoop() {
+
+    }
+
     private void doGame() {
         while (!isCompleted) {
             doTurn();
@@ -62,7 +66,7 @@ public class HanoiGame {
             String str = "";
             for (Stack<Integer> tower : towers) {
                 if (tower.size() >= i) {
-                    str += tower.get(i - 1) + "  ";
+                    str += (discCount - tower.get(i - 1) + 1) + "  ";
                 }
                 else
                     str += "   ";
@@ -77,8 +81,6 @@ public class HanoiGame {
     }
 
     private void moveDisc(int sourceTowerIndex, int destTowerIndex) {
-
-        isMoveLegal(sourceTowerIndex, destTowerIndex);
 
         int discToMove = towers.get(sourceTowerIndex).pop();
 
@@ -134,18 +136,21 @@ public class HanoiGame {
 
     private List<Integer> getOddMoves(List<Integer> candidates, boolean odd) {
         List<Integer> results = new ArrayList<Integer>();
-        for (int n : candidates)
+        for (int n : candidates) {
             if (odd && isTowerOdd(n)) results.add(n);
             else if (!odd && !isTowerOdd(n)) results.add(n);
+        }
         return results;
     }
 
     private int getLeastRecentTower(int tower1, int tower2) {
         int result = -1;
+        int disc1 = getTopDisc(tower1);
+        int disc2 = getTopDisc(tower2);
         for (int i = moves.size() - 1; i >= 0 && result == -1; --i) {
             int move = moves.get(i);
-            if (move == tower1) result = tower2;
-            else if (move == tower2) result = tower1;
+            if (move == disc1) result = tower2;
+            else if (move == disc2) result = tower1;
         }
         return  result;
     }
